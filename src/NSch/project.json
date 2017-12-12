@@ -1,0 +1,45 @@
+{
+  "version": "1.0.0-*",
+
+  "dependencies": {
+    "Sharpen": "1.0.0"
+  },
+
+  "frameworks": {
+    "netstandard1.6": {
+      "imports": [
+        "dotnet5.6",
+        "portable-net45+win8"
+      ],
+      "dependencies": {
+        "NETStandard.Library": "1.6.1",
+        "System.Runtime.Numerics": "4.3.0",
+        "System.Security.Cryptography.Algorithms": "4.3.0"
+      },
+      "buildOptions": {
+        "define": [ "NETCORE" ]
+      }
+    },
+    "net451": {
+      "imports": [
+        "dotnet5.6",
+        "portable-net45+win8"
+      ],
+      "frameworkAssemblies": {
+        "System.Web": "4.0.0",
+        "System.Numerics": "4.0.0.0",
+        "System.Security": "4.0.0.0"
+      },
+      "dependencies": {
+        "Mono.Security": "5.4.0.201"
+      }
+    }
+  },
+
+  "buildOptions": {
+    "preserveCompilationContext": true,
+    "define": [],
+    "xmlDoc": true,
+    "nowarn": [ "CS1591" ]
+  }
+}
