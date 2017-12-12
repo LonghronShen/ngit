@@ -1,6 +1,7 @@
 using System;
 using System.Threading;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using SThread = System.Threading.Thread;
 
 namespace Sharpen
@@ -118,6 +119,7 @@ namespace Sharpen
                 {
                     if (canceled)
                         return;
+
                     t = SThread.CurrentThread;
                     started = true;
                 }
@@ -157,13 +159,11 @@ namespace Sharpen
                 {
                     if (mayInterruptIfRunning)
                     {
-#if !NETCORE
                         try
                         {
                             t.Abort();
                         }
                         catch { }
-#endif
                     }
                     else
                         return false;
