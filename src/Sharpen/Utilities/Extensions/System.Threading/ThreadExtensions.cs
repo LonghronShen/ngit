@@ -10,6 +10,7 @@ namespace System.Threading
     public static class ThreadExtensions
     {
 
+#if NETCORE
         public static void Abort(this Thread thread)
         {
             MethodInfo abort = null;
@@ -23,6 +24,7 @@ namespace System.Threading
             }
             abort.Invoke(thread, new object[0]);
         }
+#endif
 
     }
 
