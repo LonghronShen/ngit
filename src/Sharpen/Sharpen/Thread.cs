@@ -91,11 +91,15 @@ namespace Sharpen
 
 		public void Interrupt()
 		{
+#if NETCORE
+			//throw new NotSupportedException();
+#else
 			lock (thread)
 			{
 				interrupted = true;
 				thread.Interrupt();
 			}
+#endif
 		}
 
 		public static bool Interrupted()
@@ -152,12 +156,10 @@ namespace Sharpen
 			thread.Start();
 		}
 
-#if !NETCORE
-		public void Abort ()
+		public void Abort()
 		{
-			thread.Abort ();
+			thread.Abort();
 		}
-#endif
 
 	}
 
