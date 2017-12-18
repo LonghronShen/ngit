@@ -49,182 +49,182 @@ using Sharpen;
 
 namespace NGit.Util
 {
-	[NUnit.Framework.TestFixture]
-	public class GitDateParserTest
-	{
-		[NUnit.Framework.SetUp]
-		public virtual void SetUp()
-		{
-			MockSystemReader mockSystemReader = new MockSystemReader();
-			SystemReader.SetInstance(mockSystemReader);
-		}
+    [NUnit.Framework.TestFixture]
+    public class GitDateParserTest
+    {
+        [NUnit.Framework.SetUp]
+        public virtual void SetUp()
+        {
+            MockSystemReader mockSystemReader = new MockSystemReader();
+            SystemReader.SetInstance(mockSystemReader);
+        }
 
-		/// <exception cref="Sharpen.ParseException"></exception>
-		[NUnit.Framework.Test]
-		public virtual void Yesterday()
-		{
-			GregorianCalendar cal = new GregorianCalendar(SystemReader.GetInstance().GetTimeZone
-				(), SystemReader.GetInstance().GetLocale());
-			DateTime parse = GitDateParser.Parse("yesterday", cal);
-			cal.Add(Calendar.DATE, -1);
-			cal.Set(Calendar.HOUR_OF_DAY, 0);
-			cal.Set(Calendar.MINUTE, 0);
-			cal.Set(Calendar.SECOND, 0);
-			cal.Set(Calendar.MILLISECOND, 0);
-			cal.Set(Calendar.MILLISECOND, 0);
-			NUnit.Framework.Assert.AreEqual(cal.GetTime(), parse);
-		}
+        /// <exception cref="Sharpen.ParseException"></exception>
+        [NUnit.Framework.Test]
+        public virtual void Yesterday()
+        {
+            var cal = new JavaGregorianCalendar(SystemReader.GetInstance().GetTimeZone
+                (), SystemReader.GetInstance().GetLocale());
+            DateTime parse = GitDateParser.Parse("yesterday", cal);
+            cal.Add(JavaCalendar.DATE, -1);
+            cal.Set(JavaCalendar.HOUR_OF_DAY, 0);
+            cal.Set(JavaCalendar.MINUTE, 0);
+            cal.Set(JavaCalendar.SECOND, 0);
+            cal.Set(JavaCalendar.MILLISECOND, 0);
+            cal.Set(JavaCalendar.MILLISECOND, 0);
+            NUnit.Framework.Assert.AreEqual(cal.GetTime(), parse);
+        }
 
-		/// <exception cref="Sharpen.ParseException"></exception>
-		[NUnit.Framework.Test]
-		public virtual void Never()
-		{
-			GregorianCalendar cal = new GregorianCalendar(SystemReader.GetInstance().GetTimeZone
-				(), SystemReader.GetInstance().GetLocale());
-			DateTime parse = GitDateParser.Parse("never", cal);
-			NUnit.Framework.Assert.AreEqual(GitDateParser.NEVER, parse);
-			parse = GitDateParser.Parse("never", null);
-			NUnit.Framework.Assert.AreEqual(GitDateParser.NEVER, parse);
-		}
+        /// <exception cref="Sharpen.ParseException"></exception>
+        [NUnit.Framework.Test]
+        public virtual void Never()
+        {
+            var cal = new JavaGregorianCalendar(SystemReader.GetInstance().GetTimeZone
+                (), SystemReader.GetInstance().GetLocale());
+            DateTime parse = GitDateParser.Parse("never", cal);
+            NUnit.Framework.Assert.AreEqual(GitDateParser.NEVER, parse);
+            parse = GitDateParser.Parse("never", null);
+            NUnit.Framework.Assert.AreEqual(GitDateParser.NEVER, parse);
+        }
 
-		/// <exception cref="Sharpen.ParseException"></exception>
-		[NUnit.Framework.Test]
-		public virtual void Now()
-		{
-			string dateStr = "2007-02-21 15:35:00 +0100";
-			DateTime refDate = SystemReader.GetInstance().GetSimpleDateFormat("yyyy-MM-dd HH:mm:ss Z"
-				).Parse(dateStr);
-			GregorianCalendar cal = new GregorianCalendar(SystemReader.GetInstance().GetTimeZone
-				(), SystemReader.GetInstance().GetLocale());
-			cal.SetTime(refDate);
-			DateTime parse = GitDateParser.Parse("now", cal);
-			NUnit.Framework.Assert.AreEqual(refDate, parse);
-			long t1 = SystemReader.GetInstance().GetCurrentTime();
-			parse = GitDateParser.Parse("now", null);
-			long t2 = SystemReader.GetInstance().GetCurrentTime();
-			NUnit.Framework.Assert.IsTrue(t2 >= parse.GetTime() && parse.GetTime() >= t1);
-		}
+        /// <exception cref="Sharpen.ParseException"></exception>
+        [NUnit.Framework.Test]
+        public virtual void Now()
+        {
+            string dateStr = "2007-02-21 15:35:00 +0100";
+            DateTime refDate = SystemReader.GetInstance().GetSimpleDateFormat("yyyy-MM-dd HH:mm:ss Z"
+                ).Parse(dateStr);
+            var cal = new JavaGregorianCalendar(SystemReader.GetInstance().GetTimeZone
+                (), SystemReader.GetInstance().GetLocale());
+            cal.SetTimeInMillis(refDate.Ticks);
+            DateTime parse = GitDateParser.Parse("now", cal);
+            NUnit.Framework.Assert.AreEqual(refDate, parse);
+            long t1 = SystemReader.GetInstance().GetCurrentTime();
+            parse = GitDateParser.Parse("now", null);
+            long t2 = SystemReader.GetInstance().GetCurrentTime();
+            NUnit.Framework.Assert.IsTrue(t2 >= parse.GetTime() && parse.GetTime() >= t1);
+        }
 
-		/// <exception cref="Sharpen.ParseException"></exception>
-		[NUnit.Framework.Test]
-		public virtual void WeeksAgo()
-		{
-			string dateStr = "2007-02-21 15:35:00 +0100";
-			SimpleDateFormat df = SystemReader.GetInstance().GetSimpleDateFormat("yyyy-MM-dd HH:mm:ss Z"
-				);
-			DateTime refDate = df.Parse(dateStr);
-			GregorianCalendar cal = new GregorianCalendar(SystemReader.GetInstance().GetTimeZone
-				(), SystemReader.GetInstance().GetLocale());
-			cal.SetTime(refDate);
-			DateTime parse = GitDateParser.Parse("2 weeks ago", cal);
-			NUnit.Framework.Assert.AreEqual(df.Parse("2007-02-07 15:35:00 +0100"), parse);
-		}
+        /// <exception cref="Sharpen.ParseException"></exception>
+        [NUnit.Framework.Test]
+        public virtual void WeeksAgo()
+        {
+            string dateStr = "2007-02-21 15:35:00 +0100";
+            SimpleDateFormat df = SystemReader.GetInstance().GetSimpleDateFormat("yyyy-MM-dd HH:mm:ss Z"
+                );
+            DateTime refDate = df.Parse(dateStr);
+            var cal = new JavaGregorianCalendar(SystemReader.GetInstance().GetTimeZone
+                (), SystemReader.GetInstance().GetLocale());
+            cal.SetTimeInMillis(refDate.Ticks);
+            DateTime parse = GitDateParser.Parse("2 weeks ago", cal);
+            NUnit.Framework.Assert.AreEqual(df.Parse("2007-02-07 15:35:00 +0100"), parse);
+        }
 
-		/// <exception cref="Sharpen.ParseException"></exception>
-		[NUnit.Framework.Test]
-		public virtual void DaysAndWeeksAgo()
-		{
-			string dateStr = "2007-02-21 15:35:00 +0100";
-			SimpleDateFormat df = SystemReader.GetInstance().GetSimpleDateFormat("yyyy-MM-dd HH:mm:ss Z"
-				);
-			DateTime refDate = df.Parse(dateStr);
-			GregorianCalendar cal = new GregorianCalendar(SystemReader.GetInstance().GetTimeZone
-				(), SystemReader.GetInstance().GetLocale());
-			cal.SetTime(refDate);
-			DateTime parse = GitDateParser.Parse("2 weeks ago", cal);
-			NUnit.Framework.Assert.AreEqual(df.Parse("2007-02-07 15:35:00 +0100"), parse);
-			parse = GitDateParser.Parse("3 days 2 weeks ago", cal);
-			NUnit.Framework.Assert.AreEqual(df.Parse("2007-02-04 15:35:00 +0100"), parse);
-			parse = GitDateParser.Parse("3.day.2.week.ago", cal);
-			NUnit.Framework.Assert.AreEqual(df.Parse("2007-02-04 15:35:00 +0100"), parse);
-		}
+        /// <exception cref="Sharpen.ParseException"></exception>
+        [NUnit.Framework.Test]
+        public virtual void DaysAndWeeksAgo()
+        {
+            string dateStr = "2007-02-21 15:35:00 +0100";
+            SimpleDateFormat df = SystemReader.GetInstance().GetSimpleDateFormat("yyyy-MM-dd HH:mm:ss Z"
+                );
+            DateTime refDate = df.Parse(dateStr);
+            var cal = new JavaGregorianCalendar(SystemReader.GetInstance().GetTimeZone
+                (), SystemReader.GetInstance().GetLocale());
+            cal.SetTimeInMillis(refDate.Ticks);
+            DateTime parse = GitDateParser.Parse("2 weeks ago", cal);
+            NUnit.Framework.Assert.AreEqual(df.Parse("2007-02-07 15:35:00 +0100"), parse);
+            parse = GitDateParser.Parse("3 days 2 weeks ago", cal);
+            NUnit.Framework.Assert.AreEqual(df.Parse("2007-02-04 15:35:00 +0100"), parse);
+            parse = GitDateParser.Parse("3.day.2.week.ago", cal);
+            NUnit.Framework.Assert.AreEqual(df.Parse("2007-02-04 15:35:00 +0100"), parse);
+        }
 
-		/// <exception cref="Sharpen.ParseException"></exception>
-		[NUnit.Framework.Test]
-		public virtual void Iso()
-		{
-			string dateStr = "2007-02-21 15:35:00 +0100";
-			DateTime exp = SystemReader.GetInstance().GetSimpleDateFormat("yyyy-MM-dd HH:mm:ss Z"
-				).Parse(dateStr);
-			DateTime parse = GitDateParser.Parse(dateStr, null);
-			NUnit.Framework.Assert.AreEqual(exp, parse);
-		}
+        /// <exception cref="Sharpen.ParseException"></exception>
+        [NUnit.Framework.Test]
+        public virtual void Iso()
+        {
+            string dateStr = "2007-02-21 15:35:00 +0100";
+            DateTime exp = SystemReader.GetInstance().GetSimpleDateFormat("yyyy-MM-dd HH:mm:ss Z"
+                ).Parse(dateStr);
+            DateTime parse = GitDateParser.Parse(dateStr, null);
+            NUnit.Framework.Assert.AreEqual(exp, parse);
+        }
 
-		/// <exception cref="Sharpen.ParseException"></exception>
-		[NUnit.Framework.Test]
-		public virtual void Rfc()
-		{
-			string dateStr = "Wed, 21 Feb 2007 15:35:00 +0100";
-			DateTime exp = SystemReader.GetInstance().GetSimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss Z"
-				).Parse(dateStr);
-			DateTime parse = GitDateParser.Parse(dateStr, null);
-			NUnit.Framework.Assert.AreEqual(exp, parse);
-		}
+        /// <exception cref="Sharpen.ParseException"></exception>
+        [NUnit.Framework.Test]
+        public virtual void Rfc()
+        {
+            string dateStr = "Wed, 21 Feb 2007 15:35:00 +0100";
+            DateTime exp = SystemReader.GetInstance().GetSimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss Z"
+                ).Parse(dateStr);
+            DateTime parse = GitDateParser.Parse(dateStr, null);
+            NUnit.Framework.Assert.AreEqual(exp, parse);
+        }
 
-		/// <exception cref="Sharpen.ParseException"></exception>
-		[NUnit.Framework.Test]
-		public virtual void ShortFmt()
-		{
-			string dateStr = "2007-02-21";
-			DateTime exp = SystemReader.GetInstance().GetSimpleDateFormat("yyyy-MM-dd").Parse
-				(dateStr);
-			DateTime parse = GitDateParser.Parse(dateStr, null);
-			NUnit.Framework.Assert.AreEqual(exp, parse);
-		}
+        /// <exception cref="Sharpen.ParseException"></exception>
+        [NUnit.Framework.Test]
+        public virtual void ShortFmt()
+        {
+            string dateStr = "2007-02-21";
+            DateTime exp = SystemReader.GetInstance().GetSimpleDateFormat("yyyy-MM-dd").Parse
+                (dateStr);
+            DateTime parse = GitDateParser.Parse(dateStr, null);
+            NUnit.Framework.Assert.AreEqual(exp, parse);
+        }
 
-		/// <exception cref="Sharpen.ParseException"></exception>
-		[NUnit.Framework.Test]
-		public virtual void ShortWithDots()
-		{
-			string dateStr = "2007.02.21";
-			DateTime exp = SystemReader.GetInstance().GetSimpleDateFormat("yyyy.MM.dd").Parse
-				(dateStr);
-			DateTime parse = GitDateParser.Parse(dateStr, null);
-			NUnit.Framework.Assert.AreEqual(exp, parse);
-		}
+        /// <exception cref="Sharpen.ParseException"></exception>
+        [NUnit.Framework.Test]
+        public virtual void ShortWithDots()
+        {
+            string dateStr = "2007.02.21";
+            DateTime exp = SystemReader.GetInstance().GetSimpleDateFormat("yyyy.MM.dd").Parse
+                (dateStr);
+            DateTime parse = GitDateParser.Parse(dateStr, null);
+            NUnit.Framework.Assert.AreEqual(exp, parse);
+        }
 
-		/// <exception cref="Sharpen.ParseException"></exception>
-		[NUnit.Framework.Test]
-		public virtual void ShortWithSlash()
-		{
-			string dateStr = "02/21/2007";
-			DateTime exp = SystemReader.GetInstance().GetSimpleDateFormat("MM/dd/yyyy").Parse
-				(dateStr);
-			DateTime parse = GitDateParser.Parse(dateStr, null);
-			NUnit.Framework.Assert.AreEqual(exp, parse);
-		}
+        /// <exception cref="Sharpen.ParseException"></exception>
+        [NUnit.Framework.Test]
+        public virtual void ShortWithSlash()
+        {
+            string dateStr = "02/21/2007";
+            DateTime exp = SystemReader.GetInstance().GetSimpleDateFormat("MM/dd/yyyy").Parse
+                (dateStr);
+            DateTime parse = GitDateParser.Parse(dateStr, null);
+            NUnit.Framework.Assert.AreEqual(exp, parse);
+        }
 
-		/// <exception cref="Sharpen.ParseException"></exception>
-		[NUnit.Framework.Test]
-		public virtual void ShortWithDotsReverse()
-		{
-			string dateStr = "21.02.2007";
-			DateTime exp = SystemReader.GetInstance().GetSimpleDateFormat("dd.MM.yyyy").Parse
-				(dateStr);
-			DateTime parse = GitDateParser.Parse(dateStr, null);
-			NUnit.Framework.Assert.AreEqual(exp, parse);
-		}
+        /// <exception cref="Sharpen.ParseException"></exception>
+        [NUnit.Framework.Test]
+        public virtual void ShortWithDotsReverse()
+        {
+            string dateStr = "21.02.2007";
+            DateTime exp = SystemReader.GetInstance().GetSimpleDateFormat("dd.MM.yyyy").Parse
+                (dateStr);
+            DateTime parse = GitDateParser.Parse(dateStr, null);
+            NUnit.Framework.Assert.AreEqual(exp, parse);
+        }
 
-		/// <exception cref="Sharpen.ParseException"></exception>
-		[NUnit.Framework.Test]
-		public virtual void DefaultFmt()
-		{
-			string dateStr = "Wed Feb 21 15:35:00 2007 +0100";
-			DateTime exp = SystemReader.GetInstance().GetSimpleDateFormat("EEE MMM dd HH:mm:ss yyyy Z"
-				).Parse(dateStr);
-			DateTime parse = GitDateParser.Parse(dateStr, null);
-			NUnit.Framework.Assert.AreEqual(exp, parse);
-		}
+        /// <exception cref="Sharpen.ParseException"></exception>
+        [NUnit.Framework.Test]
+        public virtual void DefaultFmt()
+        {
+            string dateStr = "Wed Feb 21 15:35:00 2007 +0100";
+            DateTime exp = SystemReader.GetInstance().GetSimpleDateFormat("EEE MMM dd HH:mm:ss yyyy Z"
+                ).Parse(dateStr);
+            DateTime parse = GitDateParser.Parse(dateStr, null);
+            NUnit.Framework.Assert.AreEqual(exp, parse);
+        }
 
-		/// <exception cref="Sharpen.ParseException"></exception>
-		[NUnit.Framework.Test]
-		public virtual void Local()
-		{
-			string dateStr = "Wed Feb 21 15:35:00 2007";
-			DateTime exp = SystemReader.GetInstance().GetSimpleDateFormat("EEE MMM dd HH:mm:ss yyyy"
-				).Parse(dateStr);
-			DateTime parse = GitDateParser.Parse(dateStr, null);
-			NUnit.Framework.Assert.AreEqual(exp, parse);
-		}
-	}
+        /// <exception cref="Sharpen.ParseException"></exception>
+        [NUnit.Framework.Test]
+        public virtual void Local()
+        {
+            string dateStr = "Wed Feb 21 15:35:00 2007";
+            DateTime exp = SystemReader.GetInstance().GetSimpleDateFormat("EEE MMM dd HH:mm:ss yyyy"
+                ).Parse(dateStr);
+            DateTime parse = GitDateParser.Parse(dateStr, null);
+            NUnit.Framework.Assert.AreEqual(exp, parse);
+        }
+    }
 }

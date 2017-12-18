@@ -51,6 +51,8 @@ using NGit.Util;
 using NUnit.Framework;
 using Sharpen;
 
+using Assert = NUnit.Framework.Assert;
+
 namespace NGit.Dircache
 {
 	[NUnit.Framework.TestFixture]

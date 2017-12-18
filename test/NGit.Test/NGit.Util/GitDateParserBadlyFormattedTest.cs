@@ -42,7 +42,7 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
 using NGit.Util;
-using NUnit.Framework.Experimental.Theories;
+using NUnit.Framework;
 using Sharpen;
 
 namespace NGit.Util
@@ -57,7 +57,7 @@ namespace NGit.Util
 			this.dateStr = dateStr;
 		}
 
-		[DataPoints]
+		//[DataPoints]
 		public static string[] GetDataPoints()
 		{
 			return new string[] { string.Empty, "1970", "3000.3000.3000", "3 yesterday ago", 
@@ -68,7 +68,7 @@ namespace NGit.Util
 		[Theory]
 		public virtual void BadlyFormattedWithExplicitRef()
 		{
-			Calendar @ref = new GregorianCalendar(SystemReader.GetInstance().GetTimeZone(), SystemReader
+			var @ref = new JavaGregorianCalendar(SystemReader.GetInstance().GetTimeZone(), SystemReader
 				.GetInstance().GetLocale());
 			try
 			{

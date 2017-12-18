@@ -47,6 +47,8 @@ using NGit.Junit;
 using Sharpen;
 using NUnit.Framework;
 
+using Assert = NUnit.Framework.Assert;
+
 namespace NGit.Fnmatch
 {
 	[NUnit.Framework.TestFixture]
