@@ -7,17 +7,10 @@ namespace Sharpen
 	internal class InputStreamReader : StreamReader
 	{
 
-#if NETCORE
-		// TODO: Object disposal leak here?
 		protected InputStreamReader(string file)
-			: base(File.OpenRead(file))
+			: base(file)
 		{
 		}
-#else
-		protected InputStreamReader (string file) : base(file)
-		{
-		}
-#endif
 
 		public InputStreamReader(InputStream s) : base(s.GetWrappedStream())
 		{
