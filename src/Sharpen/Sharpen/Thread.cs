@@ -91,15 +91,11 @@ namespace Sharpen
 
 		public void Interrupt()
 		{
-#if NETCORE
-			//throw new NotSupportedException();
-#else
 			lock (thread)
 			{
 				interrupted = true;
 				thread.Interrupt();
 			}
-#endif
 		}
 
 		public static bool Interrupted()

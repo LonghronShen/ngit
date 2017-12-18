@@ -1,4 +1,4 @@
-#if !NETCORE
+//#if !NETCORE
 namespace Sharpen
 {
     using System;
@@ -54,4 +54,4 @@ namespace Sharpen
     }
 
 }
-#endif
+//#endif

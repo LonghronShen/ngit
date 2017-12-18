@@ -28,6 +28,10 @@ using System;
 using System.Numerics;
 using System.Security.Cryptography;
 
+#if !NETCORE
+using Mono.Security.Cryptography;
+#endif
+
 namespace Sharpen
 {
     public abstract class KeyPairGenerator
@@ -100,6 +104,7 @@ namespace Sharpen
 
     class DHKeyPairGenerator : KeyPairGenerator
     {
+#if !NETCORE
         DHParameterSpec pspec;
 
         public override void Initialize(AlgorithmParameterSpec pars)
@@ -114,6 +119,12 @@ namespace Sharpen
             BigInteger y = new BigInteger(dh.CreateKeyExchange());
             return new KeyPair(new DHPrivateKey(dhpars), new DHPublicKey(y));
         }
+#else
+        public override KeyPair GenerateKeyPair()
+        {
+            throw new NotImplementedException();
+        }
+#endif
     }
 }
 

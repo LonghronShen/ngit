@@ -26,6 +26,10 @@
 using System;
 using System.Security.Cryptography;
 
+#if !NETCORE
+using Mono.Security.Cryptography;
+#endif
+
 namespace Sharpen
 {
     public class Cipher
@@ -65,6 +69,7 @@ namespace Sharpen
 
     class R4Cipher : Cipher
     {
+#if !NETCORE
         RC4 rc4;
         ICryptoTransform transformer;
 
@@ -86,6 +91,8 @@ namespace Sharpen
         {
             transformer.TransformBlock(input, inputOffset, inputLen, output, outputOffset);
         }
+#endif
+
     }
 
     class AesCipher : Cipher

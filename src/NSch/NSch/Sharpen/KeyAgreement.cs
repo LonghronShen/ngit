@@ -25,6 +25,10 @@
 // THE SOFTWARE.
 using System;
 
+#if !NETCORE
+using Mono.Security.Cryptography;
+#endif
+
 namespace Sharpen
 {
     public abstract class KeyAgreement
@@ -45,6 +49,7 @@ namespace Sharpen
 
     class DHKeyAgreement : KeyAgreement
     {
+#if !NETCORE
         DiffieHellmanManaged dh;
         DHPublicKey pubk;
 
@@ -54,7 +59,6 @@ namespace Sharpen
             dh = new DiffieHellmanManaged();
             dh.ImportParameters(pk.Parameters);
         }
-
 
         public override Key DoPhase(Key key, bool lastPhase)
         {
@@ -67,6 +71,22 @@ namespace Sharpen
         {
             return dh.DecryptKeyExchange(pubk.GetY().ToByteArray());
         }
+#else
+        public override void Init(Key key)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override byte[] GenerateSecret()
+        {
+            throw new NotImplementedException();
+        }
+
+        public override Key DoPhase(Key key, bool lastPhase)
+        {
+            throw new NotImplementedException();
+        }
+#endif
     }
 }
 

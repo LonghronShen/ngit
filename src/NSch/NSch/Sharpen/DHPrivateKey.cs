@@ -26,16 +26,24 @@
 using System;
 using System.Security.Cryptography;
 
+#if !NETCORE
+using Mono.Security.Cryptography;
+#endif
+
 namespace Sharpen
 {
     public class DHPrivateKey : PrivateKey
     {
-        public DSAParameters Parameters { get; private set; }
+
+#if !NETCORE
+        public DHParameters Parameters { get; private set; }
+
 
         public DHPrivateKey(DHParameters dhpars)
         {
             Parameters = dhpars;
         }
+#endif
     }
 }
 

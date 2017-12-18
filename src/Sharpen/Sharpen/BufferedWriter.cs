@@ -48,12 +48,10 @@ namespace Sharpen
             writer.WriteLine();
         }
 
-#if NETCORE
         public void Close()
         {
             writer.Close();
         }
-#endif
 
     }
 

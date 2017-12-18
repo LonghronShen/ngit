@@ -27,6 +27,10 @@ using System;
 using System.Security.Cryptography;
 using System.IO;
 
+#if !NETCORE
+using Mono.Security.Cryptography;
+#endif
+
 namespace Sharpen
 {
     public abstract class Signature
@@ -58,6 +62,34 @@ namespace Sharpen
 
     class SHA1withRSASignature : Signature
     {
+#if NETCORE
+
+        public override byte[] Sign()
+        {
+            throw new NotImplementedException();
+        }
+
+        public override bool Verify(byte[] data)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void InitSign(PrivateKey key)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void InitVerify(PublicKey key)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void Update(byte[] data)
+        {
+            throw new NotImplementedException();
+        }
+
+#else
         RSAManaged rsa = new RSAManaged();
         MemoryStream ms = new MemoryStream();
 
@@ -119,6 +151,7 @@ namespace Sharpen
                 s[n] = (byte)si[n];
             return s;
         }
+#endif
     }
 
     class SHA1withDSASignature : Signature

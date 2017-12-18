@@ -77,8 +77,7 @@ namespace NGit.Nls
 		/// 	</remarks>
 		public static readonly CultureInfo ROOT_LOCALE = CultureInfo.InvariantCulture;
 
-		private sealed class _InheritableThreadLocal_74 : InheritableThreadLocal<NGit.Nls.NLS
-			>
+		private sealed class _InheritableThreadLocal_74 : InheritableThreadLocal<NLS>
 		{
 			public _InheritableThreadLocal_74()
 			{

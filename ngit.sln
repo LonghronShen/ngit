@@ -1,28 +1,25 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.27128.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{9322C984-E662-4AA2-82D2-39FC654DCBBC}"
-	ProjectSection(SolutionItems) = preProject
-		global.json = global.json
-	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{248B0792-F135-4B5B-8F2C-0748929DE2AA}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{ADC75789-B5C5-4C47-9A5C-C0D560D30081}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Sharpen.Unix", "src\Sharpen.Unix\Sharpen.Unix.xproj", "{2AF08775-95CC-495B-AA9D-B82FCC9312BD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sharpen.Unix", "src\Sharpen.Unix\Sharpen.Unix.csproj", "{2AF08775-95CC-495B-AA9D-B82FCC9312BD}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Sharpen", "src\Sharpen\Sharpen.xproj", "{3F567F4E-B448-44CA-9204-80A6196750D6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sharpen", "src\Sharpen\Sharpen.csproj", "{3F567F4E-B448-44CA-9204-80A6196750D6}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "NSch", "src\NSch\NSch.xproj", "{F0C55435-45C1-4D50-A355-C445B645FD91}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NSch", "src\NSch\NSch.csproj", "{F0C55435-45C1-4D50-A355-C445B645FD91}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "NGit", "src\NGit\NGit.xproj", "{9637D64D-8740-4641-9781-F013FE92A86A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NGit", "src\NGit\NGit.csproj", "{9637D64D-8740-4641-9781-F013FE92A86A}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Sharpen.Test", "test\Sharpen.Test\Sharpen.Test.xproj", "{6F9A20BA-DFFE-42C8-966E-FA4319891778}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sharpen.Test", "test\Sharpen.Test\Sharpen.Test.csproj", "{6F9A20BA-DFFE-42C8-966E-FA4319891778}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "NGit.Test", "test\NGit.Test\NGit.Test.xproj", "{BF3553D6-F231-49FA-A9B7-E4D14E058B18}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NGit.Test", "test\NGit.Test\NGit.Test.csproj", "{BF3553D6-F231-49FA-A9B7-E4D14E058B18}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -65,6 +62,9 @@ Global
 		{9637D64D-8740-4641-9781-F013FE92A86A} = {248B0792-F135-4B5B-8F2C-0748929DE2AA}
 		{6F9A20BA-DFFE-42C8-966E-FA4319891778} = {ADC75789-B5C5-4C47-9A5C-C0D560D30081}
 		{BF3553D6-F231-49FA-A9B7-E4D14E058B18} = {ADC75789-B5C5-4C47-9A5C-C0D560D30081}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {47197907-B213-4A00-BA3A-43AF7E8EE1C4}
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
 		StartupItem = NGit\NGit.csproj

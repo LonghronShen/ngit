@@ -42,127 +42,130 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
 using System.IO;
+using System.Text;
 using NGit.Util;
 using Sharpen;
 
 namespace NGit.Util.IO
 {
-	/// <summary>An alternative PrintWriter that doesn't catch exceptions.</summary>
-	/// <remarks>An alternative PrintWriter that doesn't catch exceptions.</remarks>
-	public class ThrowingPrintWriter : TextWriter
-	{
-		private readonly TextWriter @out;
+    /// <summary>An alternative PrintWriter that doesn't catch exceptions.</summary>
+    /// <remarks>An alternative PrintWriter that doesn't catch exceptions.</remarks>
+    public class ThrowingPrintWriter : TextWriter
+    {
+        private readonly TextWriter @out;
 
-		private readonly string LF;
+        private readonly string LF;
 
-		/// <summary>Construct a JGitPrintWriter</summary>
-		/// <param name="out">
-		/// the underlying
-		/// <see cref="System.IO.TextWriter">System.IO.TextWriter</see>
-		/// </param>
-		public ThrowingPrintWriter(TextWriter @out)
-		{
-			this.@out = @out;
-			LF = AccessController.DoPrivileged(new _PrivilegedAction_69());
-		}
+        public override Encoding Encoding { get; }
 
-		private sealed class _PrivilegedAction_69 : PrivilegedAction<string>
-		{
-			public _PrivilegedAction_69()
-			{
-			}
+        /// <summary>Construct a JGitPrintWriter</summary>
+        /// <param name="out">
+        /// the underlying
+        /// <see cref="System.IO.TextWriter">System.IO.TextWriter</see>
+        /// </param>
+        public ThrowingPrintWriter(TextWriter @out)
+        {
+            this.@out = @out;
+            LF = AccessController.DoPrivileged(new _PrivilegedAction_69());
+        }
 
-			public string Run()
-			{
-				return SystemReader.GetInstance().GetProperty("line.separator");
-			}
-		}
+        private sealed class _PrivilegedAction_69 : PrivilegedAction<string>
+        {
+            public _PrivilegedAction_69()
+            {
+            }
 
-		/// <exception cref="System.IO.IOException"></exception>
-		public override void Write(char[] cbuf, int off, int len)
-		{
-			@out.Write(cbuf, off, len);
-		}
+            public string Run()
+            {
+                return SystemReader.GetInstance().GetProperty("line.separator");
+            }
+        }
 
-		/// <exception cref="System.IO.IOException"></exception>
-		public override void Flush()
-		{
-			@out.Flush();
-		}
+        /// <exception cref="System.IO.IOException"></exception>
+        public override void Write(char[] cbuf, int off, int len)
+        {
+            @out.Write(cbuf, off, len);
+        }
 
-		/// <exception cref="System.IO.IOException"></exception>
-		public override void Close()
-		{
-			@out.Close();
-		}
+        /// <exception cref="System.IO.IOException"></exception>
+        public override void Flush()
+        {
+            @out.Flush();
+        }
 
-		/// <summary>Print a string and terminate with a line feed.</summary>
-		/// <remarks>Print a string and terminate with a line feed.</remarks>
-		/// <param name="s"></param>
-		/// <exception cref="System.IO.IOException">System.IO.IOException</exception>
-		public virtual void Println(string s)
-		{
-			Print(s + LF);
-		}
+        /// <exception cref="System.IO.IOException"></exception>
+        public override void Close()
+        {
+            @out.Close();
+        }
 
-		/// <summary>Print a platform dependent new line</summary>
-		/// <exception cref="System.IO.IOException">System.IO.IOException</exception>
-		public virtual void Println()
-		{
-			Print(LF);
-		}
+        /// <summary>Print a string and terminate with a line feed.</summary>
+        /// <remarks>Print a string and terminate with a line feed.</remarks>
+        /// <param name="s"></param>
+        /// <exception cref="System.IO.IOException">System.IO.IOException</exception>
+        public virtual void Println(string s)
+        {
+            Print(s + LF);
+        }
 
-		/// <summary>Print a char</summary>
-		/// <param name="value"></param>
-		/// <exception cref="System.IO.IOException">System.IO.IOException</exception>
-		public virtual void Print(char value)
-		{
-			Print(value.ToString());
-		}
+        /// <summary>Print a platform dependent new line</summary>
+        /// <exception cref="System.IO.IOException">System.IO.IOException</exception>
+        public virtual void Println()
+        {
+            Print(LF);
+        }
 
-		/// <summary>Print an int as string</summary>
-		/// <param name="value"></param>
-		/// <exception cref="System.IO.IOException">System.IO.IOException</exception>
-		public virtual void Print(int value)
-		{
-			Print(value.ToString());
-		}
+        /// <summary>Print a char</summary>
+        /// <param name="value"></param>
+        /// <exception cref="System.IO.IOException">System.IO.IOException</exception>
+        public virtual void Print(char value)
+        {
+            Print(value.ToString());
+        }
 
-		/// <summary>Print a long as string</summary>
-		/// <param name="value"></param>
-		/// <exception cref="System.IO.IOException">System.IO.IOException</exception>
-		public virtual void Print(long value)
-		{
-			Print(value.ToString());
-		}
+        /// <summary>Print an int as string</summary>
+        /// <param name="value"></param>
+        /// <exception cref="System.IO.IOException">System.IO.IOException</exception>
+        public virtual void Print(int value)
+        {
+            Print(value.ToString());
+        }
 
-		/// <summary>Print a short as string</summary>
-		/// <param name="value"></param>
-		/// <exception cref="System.IO.IOException">System.IO.IOException</exception>
-		public virtual void Print(short value)
-		{
-			Print(value.ToString());
-		}
+        /// <summary>Print a long as string</summary>
+        /// <param name="value"></param>
+        /// <exception cref="System.IO.IOException">System.IO.IOException</exception>
+        public virtual void Print(long value)
+        {
+            Print(value.ToString());
+        }
 
-		/// <summary>
-		/// Print a formatted message according to
-		/// <see cref="string.Format(string, object[])">string.Format(string, object[])</see>
-		/// .
-		/// </summary>
-		/// <param name="fmt"></param>
-		/// <param name="args"></param>
-		/// <exception cref="System.IO.IOException">System.IO.IOException</exception>
-		public virtual void Format(string fmt, params object[] args)
-		{
-			Print(string.Format(fmt, args));
-		}
+        /// <summary>Print a short as string</summary>
+        /// <param name="value"></param>
+        /// <exception cref="System.IO.IOException">System.IO.IOException</exception>
+        public virtual void Print(short value)
+        {
+            Print(value.ToString());
+        }
 
-		/// <summary>Print an object's toString representations</summary>
-		/// <param name="any"></param>
-		/// <exception cref="System.IO.IOException">System.IO.IOException</exception>
-		public virtual void Print(object any)
-		{
-			@out.Write(any.ToString());
-		}
-	}
+        /// <summary>
+        /// Print a formatted message according to
+        /// <see cref="string.Format(string, object[])">string.Format(string, object[])</see>
+        /// .
+        /// </summary>
+        /// <param name="fmt"></param>
+        /// <param name="args"></param>
+        /// <exception cref="System.IO.IOException">System.IO.IOException</exception>
+        public virtual void Format(string fmt, params object[] args)
+        {
+            Print(string.Format(fmt, args));
+        }
+
+        /// <summary>Print an object's toString representations</summary>
+        /// <param name="any"></param>
+        /// <exception cref="System.IO.IOException">System.IO.IOException</exception>
+        public virtual void Print(object any)
+        {
+            @out.Write(any.ToString());
+        }
+    }
 }
