@@ -116,11 +116,14 @@ namespace Sharpen
         {
             try
             {
-                File.Move(path, name);
+                File.Move(path?.GetAbsolutePath(), name);
                 return true;
             }
-            catch
+            catch (Exception ex)
             {
+#if DEBUG
+                Console.WriteLine(ex.Message + Environment.NewLine + ex.StackTrace);
+#endif
                 return false;
             }
         }
@@ -162,9 +165,11 @@ namespace Sharpen
                     return true;
                 }
             }
-            catch
+            catch (Exception ex)
             {
-
+#if DEBUG
+                Console.WriteLine(ex.Message + Environment.NewLine + ex.StackTrace);
+#endif
             }
             return false;
         }
